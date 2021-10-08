@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="MuaVeTau.css">
+    
+    
+    </head>
+    <body>
+        <main>
+            <section>
+                <div class="site-title" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Tours & Travels</h3>
+                    <h1>Amazing Place on Earth</h1>
+                    <button class="btn">Explore</button>
+                </div>
+            </section>
+            <section>
+                <div class="radio-toggle float-left">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <p><input  class="form-check-input" type="radio" id="motchieu" value="option1">Một chiều</p>
+                        </label>
+                        <label class="form-check-label">
+                            <p><input class="form-check-input" type="radio" id="khuhoi" value="option2">Khứ hồi</p>
+                        </label>
+                    </div>
+                </div>
+            </section>
+            <form id="SellForm" action="/action_page.php">
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+                <div class="tab">NGƯỜI ĐẶT VÉ CHÍNH: 
+                    <p><input placeholder="Tên người đặt vé chính" oninput="this.className = ''" name="name1"></p>
+                    <p><input placeholder="Số điện thoại liên lạc" oninput="this.className = ''" name="numberphone1"></p>
+                    <p><input placeholder="Mail liên lạc" oninput="this.className = ''" name="Mail"></p>
+                </div>
+                <div class="tab">HÀNH KHÁCH:
+                    <p><input placeholder="CMND/CCCD" oninput="this.className = ''" name="CMND"></p>
+                    <p><input placeholder="Họ và tên" oninput="this.className = ''" name="name2"></p>
+                    <p><input placeholder="Nơi sinh" oninput="this.className = ''" name="pob"></p>
+                    <p><input placeholder="Ngày sinh" oninput="this.className = ''" name="dob"></p>
+                    <p><input placeholder="Số điện thoại" oninput="this.className = ''" name="numberphone2"></p>
+                    <p><input placeholder="Quốc tịch" oninput="this.className = ''" name="nationality"></p>
+                    <p><input placeholder="Mail" oninput="this.className = ''" name="Mail2"></p>
+                    <p><div class="form-group">
+                        <select id="slRoute" name="slRoute" class="form-control uppercase">
+                            
+                            <option value="-1">Loại vé</option>
+                                <option value="1">Trẻ em (Dưới 15 tuổi) </option>
+                                <option value="2">Người lớn</option>
+                                <option value="3">Người cao tuổi (Trên 60)</option>
+                                <option value="4">Vé VIP</option>
+                                  </select>
+                    </div></p>
+                </div>
+                <div class="tab">CHỌN GHẾ NGỒI
+                    <table class="table table-dark table-striped">
+                        <thead>
+                          <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>John</td>
+                            <td>Doe</td>
+                            <td>john@example.com</td>
+                          </tr>
+                          <tr>
+                            <td>Mary</td>
+                            <td>Moe</td>
+                            <td>mary@example.com</td>
+                          </tr>
+                          <tr>
+                            <td>July</td>
+                            <td>Dooley</td>
+                            <td>july@example.com</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+                <!--------------Button tiến và lùi--------------->
+                <div style="overflow:auto;">
+                    <div style="float:right;">
+                      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Quay về</button>
+                      <button type="button" id="nextBtn" onclick="nextPrev(1)">Tiếp tục</button>
+                    </div>
+                </div>
+                <!----------------Step by step------------------->
+                
+
+            </form>
+        </main>
+        <script>
+            var currentTab = 0; // Current tab is set to be the first tab (0)
+            showTab(currentTab); // Display the current tab
+
+            function showTab(n) 
+            {
+                var x = document.getElementsByClassName("tab");
+                x[n].style.display = "block";
+                if (n == 0) {
+                    document.getElementById("prevBtn").style.display = "none";
+                } else {
+                    document.getElementById("prevBtn").style.display = "inline";
+                }
+                if (n == (x.length - 1)) {
+                    document.getElementById("nextBtn").innerHTML = "Submit";
+                } else {
+                    document.getElementById("nextBtn").innerHTML = "Next";
+                }
+                fixStepIndicator(n)
+            }
+            
+            function nextPrev(n) 
+            {
+                var x = document.getElementsByClassName("tab");
+                // Exit the function if any field in the current tab is invalid:
+                if (n == 1 && !validateForm()) return false;
+                // Hide the current tab:
+                x[currentTab].style.display = "none";
+                // Increase or decrease the current tab by 1:
+                currentTab = currentTab + n;
+                // if you have reached the end of the form...
+                if (currentTab >= x.length) {
+                    // ... the form gets submitted:
+                    document.getElementById("SellForm").submit();
+                    return false;
+                }
+                // Otherwise, display the correct tab:
+                showTab(currentTab);
+            }
+            function validateForm() 
+            {
+                // This function deals with validation of the form fields
+                var x, y, i, valid = true;
+                x = document.getElementsByClassName("tab");
+                y = x[currentTab].getElementsByTagName("input");
+                // A loop that checks every input field in the current tab:
+                for (i = 0; i < y.length; i++) 
+                {
+                    // If a field is empty...
+                    if (y[i].value == "") {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false
+                    valid = false;
+                    }
+                }
+                // If the valid status is true, mark the step as finished and valid:
+                if (valid) {
+                    document.getElementsByClassName("step")[currentTab].className += " finish";
+                }
+                return valid; // return the valid status
+            }
+            function fixStepIndicator(n) 
+            {
+                // This function removes the "active" class of all steps...
+                var i, x = document.getElementsByClassName("step");
+                for (i = 0; i < x.length; i++) {
+                    x[i].className = x[i].className.replace(" active", "");
+                }
+                //... and adds the "active" class on the current step:
+                x[n].className += " active";
+            }
+        </script>
+        
+    </body>
+</html>
